@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-100: #ff6600;
+  --primary-200: #ff983f;
+  --primary-300: #ffffa1;
+  --accent-100: #990000;
+  --accent-200: #ffa783;
+  --text-100: #ffffff;
+  --text-200: #e0e0e0;
+  --bg-100: #1a1a1a;
+  --bg-200: #292929;
+  --bg-300: #404040;
+}
