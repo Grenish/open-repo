@@ -44,15 +44,26 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   const fetchRepos = useCallback(async () => {
     setIsLoading(true);
     try {
-      let query = searchTerm
-        ? `${searchTerm} in:name,description`
-        : "stars:>1000";
+      let query = searchTerm ? `${searchTerm} in:name,description` : "";
       if (appliedLanguage) {
-        query += ` language:${appliedLanguage}`;
+        query += query
+          ? ` language:${appliedLanguage}`
+          : `language:${appliedLanguage}`;
       }
       if (appliedDifficulty && appliedDifficulty !== "None") {
-        query += ` topic:${appliedDifficulty.toLowerCase().replace(" ", "-")}`;
+        const difficultyTopic = appliedDifficulty
+          .toLowerCase()
+          .replace(" ", "-");
+        query += query
+          ? ` topic:${difficultyTopic}`
+          : `topic:${difficultyTopic}`;
       }
+
+      // If query is still empty, use a default search for popular repositories
+      if (!query) {
+        query = "stars:>100";
+      }
+
       const res = await fetch(
         `https://api.github.com/search/repositories?q=${encodeURIComponent(
           query
